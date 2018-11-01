@@ -1,0 +1,142 @@
+:root {
+  --color-primary-1: #A0EEC0;
+  --color-primary-2: #8AE9C1;
+  --color-primary-3: #86CD82;
+  --color-primary-4: #72A276;
+  --color-primary-5: #666B6A;
+  --color-grey-light-1: #faf9f9;
+  --color-grey-light-2: #f4f2f2;
+  --color-grey-light-3: #f0eeee;
+  --color-grey-light-4: #ccc;
+  --color-grey-dark-1: #333;
+  --color-grey-dark-2: #777;
+  --color-grey-dark-3: #999;
+  --shadow-dark: 0 2rem 6rem rgba(0, 0, 0, .3);
+  --shadow-light: 0 2rem 5rem rgba(0, 0, 0, .06);
+  --line: 1px solid var(--color-grey-light-2); }
+
+* {
+  margin: 0;
+  padding: 0; }
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit; }
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; }
+  @media only screen and (max-width: 68.75em) {
+    html {
+      font-size: 50%; } }
+  @media only screen and (max-width: 56.25em) {
+    html {
+      font-size: 37.5%; } }
+
+body::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  opacity: 1;
+  min-height: 100vh;
+  background-image: linear-gradient(to top, var(--color-primary-1), var(--color-primary-5));
+  background-size: 100% 100%; }
+
+body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--color-grey-dark-2);
+  background-size: contain;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  font-size: 1.5rem;
+  box-sizing: border-box; }
+
+.heading-primary {
+  font-size: 5rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  -webkit-background-clip: text;
+  color: transparent;
+  color: white; }
+
+.entryContainer {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center; }
+  .entryContainer Button {
+    font-size: 2.5rem;
+    font-weight: 200;
+    margin: 0 10px;
+    width: 200px; }
+
+.authModalForm {
+  color: black;
+  width: 45rem;
+  font-size: 2rem;
+  font-weight: 600; }
+  .authModalForm h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: 600; }
+  .authModalForm__container {
+    padding: 15px; }
+  .authModalForm Button {
+    font-size: 1.75rem;
+    font-weight: 200;
+    margin: 0.2rem 1.5rem;
+    width: 100px;
+    float: right;
+    background-color: var(--color-primary-1); }
+
+.react-tabs {
+  -webkit-tap-highlight-color: transparent; }
+
+.react-tabs__tab-list {
+  border-bottom: 1px solid #aaa;
+  margin: 0 0 10px;
+  padding: 0; }
+
+.react-tabs__tab {
+  text-align: center;
+  display: inline-block;
+  border: 1px solid transparent;
+  border-bottom: none;
+  bottom: 0px;
+  position: relative;
+  list-style: none;
+  padding: 10px;
+  height: 50px;
+  width: 50%;
+  cursor: pointer; }
+
+.react-tabs__tab--selected {
+  background: #fff;
+  border-color: #aaa;
+  color: black;
+  border-radius: 5px 5px 0 0;
+  outline: 0;
+  background-color: var(--color-primary-5);
+  color: white; }
+
+.react-tabs__tab-panel {
+  display: none; }
+
+.react-tabs__tab-panel--selected {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .react-tabs__tab-panel--selected Button {
+    position: absolute;
+    bottom: 40px; }

@@ -1,0 +1,96 @@
+.entryContainer {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+  Button {
+    font-size: 2.5rem;
+    font-weight: 200;
+    margin: 0 10px;
+    width: 200px;
+  }
+
+}
+
+.authModalForm {
+  color: black;
+  width: 45rem;
+  font-size: 2rem;
+  font-weight: 600;
+
+  h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+  }
+
+  &__container {
+    padding: 15px;
+    // background-color: var(--color-primary-3);
+  }
+
+  Button {
+    font-size: 1.75rem;
+    font-weight: 200;
+    margin: 0.2rem 1.5rem;
+    width: 100px;
+    float: right;
+    background-color: var(--color-primary-1);
+
+  }
+  
+}
+
+
+.react-tabs {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.react-tabs__tab-list {
+  border-bottom: 1px solid #aaa;
+  margin: 0 0 10px;
+  padding: 0;
+}
+
+.react-tabs__tab {
+  text-align: center;
+  display: inline-block;
+  border: 1px solid transparent;
+  border-bottom: none;
+  bottom: 0px;
+  position: relative;
+  list-style: none;
+  padding: 10px;
+  height: 50px;
+  width: 50%;
+  cursor: pointer;
+
+}
+
+.react-tabs__tab--selected {
+  background: #fff;
+  border-color: #aaa;
+  color: black;
+  border-radius: 5px 5px 0 0;
+  outline: 0;
+  background-color: var(--color-primary-5);
+  color: white;
+}
+
+.react-tabs__tab-panel {
+  display: none;
+}
+
+.react-tabs__tab-panel--selected {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  Button {
+    position: absolute;
+    bottom: 40px;
+  }
+
+}
