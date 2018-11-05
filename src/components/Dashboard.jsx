@@ -3,7 +3,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { fetchTransactions } from '../redux/actions/tranxActions';
+import { fetchTransactions, addTransaction } from '../redux/actions/tranxActions';
 
 
 const itemStyle = {
@@ -16,8 +16,15 @@ const itemStyle = {
 
 class Dashboard extends Component {
   componentDidMount(){
-    // this.props.fetchTransactions(localStorage.getItem('token'));
-    console.log(this.props.transactions)
+    // this.props.fetchTransactions();
+    let postBody = {
+      user_id: 1,
+      type: "",
+      business_name: "",
+      amount: 0
+    }
+    this.props.addTransaction(postBody);
+    console.log(this.props.transactions);
   }
 
   state = {
@@ -39,7 +46,7 @@ class Dashboard extends Component {
   render() { 
     return (
       <div>
-   
+        
       </div>
     );
   }
@@ -50,7 +57,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchtoProps = {
-  fetchTransactions
+  fetchTransactions,
+  addTransaction
 }
 
 export default connect(mapStateToProps, mapDispatchtoProps)(Dashboard);

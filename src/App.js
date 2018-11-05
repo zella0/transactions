@@ -11,7 +11,7 @@ import { fetchTransactions } from './redux/actions/tranxActions';
 
 class App extends Component {
   componentDidMount(){
-    this.props.fetchTransactions(localStorage.getItem('token'));
+    this.props.fetchTransactions();
   }
 
   render() {

@@ -7,10 +7,10 @@ UPDATE_TRANSACTION,
 
 import axios from 'axios';
 
-export const fetchTransactions = (token) => dispatch => {
+export const fetchTransactions = () => dispatch => {
   axios.get('http://localhost:8000/transactions?page=0', {
     headers: {
-      token: token
+      token: localStorage.getItem('token')
     }
   }).then((response) => {
       dispatch({
@@ -19,21 +19,19 @@ export const fetchTransactions = (token) => dispatch => {
       })
     })
 }
-// export const addTransaction = expense => dispatch => {
-//   axios.post("http://localhost:8000/transactions", expense)
-//     .then(response => {
-//       dispatch({
-//         type: ADD_EXPENSE_SUCCESS,
-//         payload: response.data
-//       });
-//     })
-//     .catch(err =>
-//       dispatch({
-//         type: ADD_EXPENSE_FAILED,
-//         payload: err
-//       })
-//     );
-// };
+
+export const addTransaction = (postBody) => dispatch => {
+  axios.post("http://localhost:8000/transactions/create", postBody, {
+    headers: {
+      token: localStorage.getItem('token')
+    }
+  }).then(response => {
+      dispatch({
+        type: ADD_TRANSACTION,
+        payload: response.data
+      });
+    })
+};
 
 // export const deleteTransaction = id => dispatch => {
 //   axios.delete(`http://localhost:8000/transactions/${id}`)
@@ -62,3 +60,17 @@ export const fetchTransactions = (token) => dispatch => {
 //       })
 //     );
 // };
+
+// <InfiniteScroll
+//   dataLength={this.state.items.length}
+//   next={this.fetchMoreData}
+//   hasMore={true}
+//   loader={<h4>Loading...</h4>}
+// >
+//   {this.state.items.map((item, index) => (
+//     <div style={itemStyle} key={index}>
+//       div - #{item.id}
+//       {/* {console.log(item)} */}
+//     </div>
+//   ))}
+// </InfiniteScroll>

@@ -109,12 +109,10 @@ class EntryPortal extends Component {
             this.setState({});
           }
         })
-    }, 3000);
+    }, 2000);
   }
 
   render() {
-    console.log(this.props);
-
     return (
       <div className="entryContainer">
         <p className="heading-primary"> bank of g96 </p>
