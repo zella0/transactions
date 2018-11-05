@@ -1,20 +1,48 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router';
+import { Switch, Route, Redirect } from 'react-router';
+
+import { connect } from 'react-redux';
 
 import EntryPortal from './components/EntryPortal';
 import Dashboard from './components/Dashboard';
 
+import { fetchTransactions } from './redux/actions/tranxActions';
+
+
 class App extends Component {
+  componentDidMount(){
+    this.props.fetchTransactions(localStorage.getItem('token'));
+  }
+
   render() {
-    return (
-     <React.Fragment>
-       <Switch>
-         <Route exact path='/' component={EntryPortal} />
-         <Route exact path='/dashboard' component={Dashboard} />
-       </Switch>
-     </React.Fragment>
-    );
+    let isLoggedIn = null;
+    if(this.props.transactions){
+      isLoggedIn = this.props.transactions.message ? false : true;
+      return (
+      <React.Fragment>
+        <Switch>
+          <Route path="/" render={() => (
+              isLoggedIn ? (
+                <Dashboard/>
+              ) : (
+                <EntryPortal />
+              )
+            )}/>
+        </Switch>
+      </React.Fragment>
+      );
+    }else{
+      return <div>Loading..</div>
+    }
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  transactions: state.transactions[0],
+})
+
+const mapDispatchtoProps = {
+  fetchTransactions
+}
+
+export default connect(mapStateToProps, mapDispatchtoProps)(App);

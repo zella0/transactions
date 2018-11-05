@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Modal from 'react-awesome-modal';
@@ -6,6 +7,10 @@ import Modal from 'react-awesome-modal';
 import { FormProvider, Form } from 'react-advanced-form';
 import { Input, Button } from 'react-advanced-form-addons';
 import isEmail from 'validator/lib/isEmail';
+
+// import { connect } from 'react-redux';
+
+import axios from 'axios';
 
 const messages = {
   generic: {
@@ -39,9 +44,9 @@ const rules = {
   type: {
     email: ({ value }) => isEmail(value),
     password: {
-      capitalLetter: ({ value }) => /[A-Z]/.test(value),
-      oneNumber: ({ value }) => /[0-9]/.test(value),
-      minLength: ({ value }) => (value.length > 5)
+      // capitalLetter: ({ value }) => /[A-Z]/.test(value),
+      // oneNumber: ({ value }) => /[0-9]/.test(value),
+      // minLength: ({ value }) => (value.length > 5)
     }
   },
 
@@ -58,7 +63,7 @@ class EntryPortal extends Component {
   state = {
     tabIndex: 0,
     visible: false,
-    // signUp_modalHeight: 
+    validating: false
   }
 
   openModal() {
@@ -73,12 +78,42 @@ class EntryPortal extends Component {
     });
   }
 
-  signin = ({ serialized }) => {
-    console.log(serialized)
+  userSignIn = ({ serialized, fields, form }) => {
+    // console.log(serialized)
+    // console.log(fields)
+    // console.log(form)
+
+    fields.email.validating = true; 
+    fields.password.validating = true; 
+    this.setState({ });
+
+    return setTimeout(()=>{
+      return axios.post('http://localhost:8000/users/login', serialized)
+        .then((response) => {
+          let token = response.data.token;
+          localStorage.setItem("token", token);
+          if (response.data.token) {
+            console.log(this.props)
+            // this.props.history.push('/');
+            window.location.href = '/';
+          } else {
+            fields.email.validating = false;
+            fields.password.validating = false;
+            
+            fields.email.invalid = true;
+            fields.password.invalid = true;
+
+            fields.email.valid = false;
+            fields.password.valid = false;
+
+            this.setState({});
+          }
+        })
+    }, 3000);
   }
 
-
   render() {
+    console.log(this.props);
 
     return (
       <div className="entryContainer">
@@ -91,15 +126,14 @@ class EntryPortal extends Component {
                 <Tab>Sign In</Tab>
                 <Tab>Sign Up</Tab>
               </TabList>
-              <TabPanel>
-                <FormProvider rules={rules} messages={messages}>
-                  <Form action={ this.signin }>
+              <FormProvider rules={rules} messages={messages}>
+                <TabPanel>
+                  <Form action={this.userSignIn}>
                     <Input
                       name="email"
                       type="email"
                       label="Email"
                       placeholder="Enter your email"
-                      // asyncRule={this.validateEmail}
                       required />
                     <Input
                       name="password"
@@ -107,19 +141,22 @@ class EntryPortal extends Component {
                       label="Password"
                       placeholder="Enter your password"
                       required />
-                  <Button primary>Sign In</Button>
+                    <Button primary>
+                      Sign In
+                    </Button>
+                  
                   </Form>
-                </FormProvider>
-              </TabPanel>
-              <TabPanel>
-                <FormProvider rules={rules} messages={messages}>
-                  <Form action={ this.signup }>
+                </TabPanel>
+              </FormProvider>
+              <FormProvider rules={rules} messages={messages}>
+                <TabPanel>
+                  <Form >
                     <Input
                       name="email"
                       type="email"
                       label="Email"
                       placeholder="Enter your email"
-                      // asyncRule={this.validateEmail}
+                      asyncRule={this.validateEmail}
                       required />
                     <Input
                       name="password"
@@ -134,17 +171,26 @@ class EntryPortal extends Component {
                       placeholder="Confirm password"
                       required />
                     <Button primary>Sign Up</Button>
+                  
                   </Form>
-                </FormProvider>
-              </TabPanel>
+                </TabPanel>
+              </FormProvider>
             </Tabs>
           </div>
         </Modal>
 
-   
+
       </div>
     );
   }
 }
+
+// const mapStateToProps = state => ({
+
+// })
+
+// const mapDispatchtoProps = {
+
+// }
 
 export default EntryPortal;

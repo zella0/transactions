@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
+
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { fetchTransactions } from '../redux/actions/tranxActions';
+
 
 const itemStyle = {
   height: 30,
@@ -11,45 +15,43 @@ const itemStyle = {
 
 
 class Dashboard extends Component {
+  componentDidMount(){
+    // this.props.fetchTransactions(localStorage.getItem('token'));
+    console.log(this.props.transactions)
+  }
+
   state = {
-    items: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+    items: [],
     page: 0
   }
-  fetchMoreData = () => {
-    axios.get(`http://localhost:8000/transactions?page=${this.state.page}`)
-    .then((response)=>{
-      console.log(this.state.items)
-      // this.state.items.push(...response.data);
-
-      // let  
-      let result = this.state.items.push(...response.data);
-
-      this.setState({
-        page: this.state.page+1,
-        items: [...this.state.items, ...response.data]
-      });
-    })
-  };
+  // fetchMoreData = () => {
+  //   axios.get(`http://localhost:8000/transactions?page=${this.state.page}`)
+  //   .then((response)=>{
+  //     let result = this.state.items.push(...response.data);
+  //     console.log(response)
+  //     this.setState({
+  //       page: this.state.page+1,
+  //       items: [...this.state.items, ...response.data]
+  //     });
+  //   })
+  // };
 
   render() { 
     return (
       <div>
-        <InfiniteScroll
-          dataLength={this.state.items.length}
-          next={this.fetchMoreData}
-          hasMore={true}
-          loader={<h4>Loading...</h4>}
-        >
-          {this.state.items.map((item, index) => (
-            <div style={itemStyle} key={index}>
-              div - #{item.id}
-              {/* {console.log(item)} */}
-            </div>
-          ))}
-        </InfiniteScroll>
+   
       </div>
     );
   }
 }
  
-export default Dashboard;
+const mapStateToProps = state => ({
+  transactions: state.transactions,
+})
+
+const mapDispatchtoProps = {
+  fetchTransactions
+}
+
+export default connect(mapStateToProps, mapDispatchtoProps)(Dashboard);
+
