@@ -1,69 +1,26 @@
 import React, { Component } from 'react';
-import InfiniteScroll from "react-infinite-scroll-component";
 
-import axios from 'axios';
+import TranxTable from './TranxTable';
+
 import { connect } from 'react-redux';
-import { fetchTransactions, addTransaction, deleteTransaction, updateTransaction } from '../redux/actions/tranxActions';
-
-
-const itemStyle = {
-  height: 30,
-  border: "1px solid green",
-  margin: 6,
-  padding: 8
-};
-
 
 class Dashboard extends Component {
-  componentDidMount(){
-    // this.props.fetchTransactions();
-    let postBody = {
-      id: 2,
-      user_id: 3,
-      type: "asd",
-      business_name: "zxc",
-      amount: 0
-    }
-    // this.props.addTransaction(postBody);
-    // this.props.deleteTransaction(10);
-    this.props.updateTransaction(postBody);
-  }
-
-  state = {
-    items: [],
-    page: 0
-  }
-  
-  // fetchMoreData = () => {
-  //   axios.get(`http://localhost:8000/transactions?page=${this.state.page}`)
-  //   .then((response)=>{
-  //     let result = this.state.items.push(...response.data);
-  //     console.log(response)
-  //     this.setState({
-  //       page: this.state.page+1,
-  //       items: [...this.state.items, ...response.data]
-  //     });
-  //   })
-  // };
 
   render() { 
     return (
       <div>
-        
+        <TranxTable />
       </div>
     );
   }
 }
  
 const mapStateToProps = state => ({
-  transactions: state.transactions,
+  // transactions: state.transactions,
 })
 
 const mapDispatchtoProps = {
-  fetchTransactions,
-  addTransaction,
-  deleteTransaction,
-  updateTransaction
+
 }
 
 export default connect(mapStateToProps, mapDispatchtoProps)(Dashboard);

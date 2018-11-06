@@ -7,8 +7,8 @@ UPDATE_TRANSACTION,
 
 import axios from 'axios';
 
-export const fetchTransactions = () => dispatch => {
-  axios.get('http://localhost:8000/transactions?page=0', {
+export const fetchTransactions = (page_num) => dispatch => {
+  axios.get(`http://localhost:8000/transactions?page=${page_num}`, {
     headers: {
       token: localStorage.getItem('token')
     }

@@ -86,7 +86,7 @@ class EntryPortal extends Component {
     return setTimeout(() => {
       return axios.post('http://localhost:8000/users/login', serialized)
         .then((response) => {
-          let token = response.data.token;
+          let { token, user_id } = response.data;
           localStorage.setItem("token", token);
           if (response.data.token) {
             // this.props.history.push('/');
