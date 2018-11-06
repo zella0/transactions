@@ -17,6 +17,17 @@ export default (state = initialState, action) => {
       }
     case ADD_TRANSACTION:
        return [...state, ...action.payload];
+    
+    case DELETE_TRANSACTION:
+      return state.filter(item => item.id !== action.payload);
+    
+    case UPDATE_TRANSACTION:
+       return state.map((item)=>{
+         if(item.id === action.payload.id){
+           item = action.payload;
+         }
+         return item;
+       })
 
     default:
       return state;

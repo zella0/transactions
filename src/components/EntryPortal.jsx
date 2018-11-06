@@ -79,27 +79,22 @@ class EntryPortal extends Component {
   }
 
   userSignIn = ({ serialized, fields, form }) => {
-    // console.log(serialized)
-    // console.log(fields)
-    // console.log(form)
+    fields.email.validating = true;
+    fields.password.validating = true;
+    this.setState({});
 
-    fields.email.validating = true; 
-    fields.password.validating = true; 
-    this.setState({ });
-
-    return setTimeout(()=>{
+    return setTimeout(() => {
       return axios.post('http://localhost:8000/users/login', serialized)
         .then((response) => {
           let token = response.data.token;
           localStorage.setItem("token", token);
           if (response.data.token) {
-            console.log(this.props)
             // this.props.history.push('/');
             window.location.href = '/';
           } else {
             fields.email.validating = false;
             fields.password.validating = false;
-            
+
             fields.email.invalid = true;
             fields.password.invalid = true;
 
@@ -108,6 +103,40 @@ class EntryPortal extends Component {
 
             this.setState({});
           }
+        })
+    }, 2000);
+  }
+
+  userSignUp = ({ serialized, fields, form }) => {
+    fields.email.validating = true;
+    fields.password.validating = true;
+    fields.confirmedPassword.validating = true;
+    this.setState({});
+    delete serialized.confirmedPassword;
+    console.log(serialized);
+    return setTimeout(() => {
+      return axios.post('http://localhost:8000/users/signup', serialized)
+        .then((response) => {
+          console.log(response.data)
+          // this.props.history.push('/');
+          if (response.data.message === 'Email address already exists'){
+            fields.email.validating = false;
+            fields.password.validating = false;
+            fields.confirmedPassword.validating = false;
+
+            fields.email.invalid = true;
+            fields.password.invalid = true;
+            fields.confirmedPassword.invalid = true;
+
+            fields.email.valid = false;
+            fields.password.valid = false;
+            fields.confirmedPassword.valid = false;
+            this.setState({});
+          }else{
+            window.location.href = '/';
+          }
+          alert('Email address already exists')
+          // console.log(fields)
         })
     }, 2000);
   }
@@ -142,19 +171,18 @@ class EntryPortal extends Component {
                     <Button primary>
                       Sign In
                     </Button>
-                  
+
                   </Form>
                 </TabPanel>
               </FormProvider>
               <FormProvider rules={rules} messages={messages}>
                 <TabPanel>
-                  <Form >
+                  <Form action={this.userSignUp}>
                     <Input
                       name="email"
                       type="email"
                       label="Email"
                       placeholder="Enter your email"
-                      asyncRule={this.validateEmail}
                       required />
                     <Input
                       name="password"
@@ -169,7 +197,6 @@ class EntryPortal extends Component {
                       placeholder="Confirm password"
                       required />
                     <Button primary>Sign Up</Button>
-                  
                   </Form>
                 </TabPanel>
               </FormProvider>

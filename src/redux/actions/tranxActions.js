@@ -33,33 +33,29 @@ export const addTransaction = (postBody) => dispatch => {
     })
 };
 
-// export const deleteTransaction = id => dispatch => {
-//   axios.delete(`http://localhost:8000/transactions/${id}`)
-//     .then(response => dispatch({
-//       type: DELETE_EXPENSE_SUCCESS,
-//       payload: id
-//     }))
-//     .catch(err => dispatch({
-//       type: DELETE_EXPENSE_FAILED,
-//       payload: err
-//     }));
-// };
+export const deleteTransaction = id => dispatch => {
+  axios.delete(`http://localhost:8000/transactions/remove/${id}`, {
+    headers: {
+      token: localStorage.getItem('token')
+    }
+  }).then(() => dispatch({
+      type: DELETE_TRANSACTION,
+      payload: id
+    }))
+};
 
-// export const updateTransaction = (expense, id) => dispatch => {
-//   axios.patch(`http://localhost:8000/transactions/${id}`, expense)
-//     .then(response => {
-//       dispatch({
-//         type: UPDATE_EXPENSE_SUCCESS,
-//         payload: response.data
-//       });
-//     })
-//     .catch(err =>
-//       dispatch({
-//         type: UPDATE_EXPENSE_FAILED,
-//         payload: err
-//       })
-//     );
-// };
+export const updateTransaction = (postBody) => dispatch => {
+  axios.patch(`http://localhost:8000/transactions/update/${postBody.id}`, postBody, {
+    headers: {
+      token: localStorage.getItem('token')
+    }
+  }).then(() => {
+      dispatch({
+        type: UPDATE_TRANSACTION,
+        payload: postBody
+      });
+    })
+};
 
 // <InfiniteScroll
 //   dataLength={this.state.items.length}
